@@ -11,13 +11,31 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-formData[0].setAttribute("data-error", "Saisissez un prénom d'au moins 2 lettres.");
-formData[1].setAttribute("data-error", "Saisissez un nom d'au moins 2 lettres.");
+formData[0].setAttribute(
+  "data-error",
+  "Saisissez un prénom d'au moins 2 lettres."
+);
+formData[1].setAttribute(
+  "data-error",
+  "Saisissez un nom d'au moins 2 lettres."
+);
 formData[2].setAttribute("data-error", "Saisissez une adresse e-mail valide.");
-formData[3].setAttribute("data-error", "Vous devez renseigner une date de naissance.");
-formData[4].setAttribute("data-error", "Saisissez un nombre de tournois valide.");
-formData[5].setAttribute("data-error", "Vous devez choisir un lieu de tournoi.");
-formData[6].setAttribute("data-error", "Prenez connaissance des conditions d'utilisation.");
+formData[3].setAttribute(
+  "data-error",
+  "Vous devez renseigner une date de naissance."
+);
+formData[4].setAttribute(
+  "data-error",
+  "Saisissez un nombre de tournois valide."
+);
+formData[5].setAttribute(
+  "data-error",
+  "Vous devez choisir un lieu de tournoi."
+);
+formData[6].setAttribute(
+  "data-error",
+  "Prenez connaissance des conditions d'utilisation."
+);
 
 const closeModalBtn = document.querySelector(".close");
 const submitBtn = document.querySelector(".btn-submit");
@@ -48,27 +66,31 @@ function closeModal() {
 
 // verify inputs
 
-submitBtn.addEventListener("click",verifyInputs)
+submitBtn.addEventListener("click", verifyInputs);
 
 function testFirstName() {
   if (
-    /^[\w'\-,.][^0-9._!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/.test(firstNameInput.value)
+    /^[\w'\-,.][^0-9._!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/.test(
+      firstNameInput.value
+    )
   ) {
     formData[0].setAttribute("data-error-visible", "false");
     return true;
   }
-    formData[0].setAttribute("data-error-visible", "true");
-  return false
+  formData[0].setAttribute("data-error-visible", "true");
+  return false;
 }
 
 function testLastName() {
   if (
-    /^[\w'\-,.][^0-9._!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/.test(lastNameInput.value)
+    /^[\w'\-,.][^0-9._!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/.test(
+      lastNameInput.value
+    )
   ) {
     formData[1].setAttribute("data-error-visible", "false");
     return true;
   }
-  formData[1].setAttribute("data-error-visible", "true")
+  formData[1].setAttribute("data-error-visible", "true");
   return false;
 }
 
@@ -81,7 +103,7 @@ function testEmail() {
     formData[2].setAttribute("data-error-visible", "false");
     return true;
   }
-  formData[2].setAttribute("data-error-visible", "true")
+  formData[2].setAttribute("data-error-visible", "true");
   return false;
 }
 
@@ -90,8 +112,8 @@ function testBirthdate() {
     formData[3].setAttribute("data-error-visible", "false");
     return true;
   }
-  formData[3].setAttribute("data-error-visible", "true")
-  return false
+  formData[3].setAttribute("data-error-visible", "true");
+  return false;
 }
 
 function testQuantity() {
@@ -99,8 +121,8 @@ function testQuantity() {
     formData[4].setAttribute("data-error-visible", "false");
     return true;
   }
-  formData[4].setAttribute("data-error-visible", "true")
-  return false
+  formData[4].setAttribute("data-error-visible", "true");
+  return false;
 }
 
 function testLocation() {
@@ -111,9 +133,9 @@ function testLocation() {
     return true;
   }
 
-  formData[5].setAttribute("data-error-visible", "true")
+  formData[5].setAttribute("data-error-visible", "true");
 
- return false;
+  return false;
 }
 
 termsOfUseInput.addEventListener("click", setTermsOfUse);
@@ -121,11 +143,9 @@ termsOfUseInput.addEventListener("click", setTermsOfUse);
 function setTermsOfUse() {
   if (termsOfUseInput.attributes[3]) {
     termsOfUseInput.removeAttribute("checked");
-    
-  } else{
+  } else {
     termsOfUseInput.setAttribute("checked", "");
   }
-  
 }
 
 function testTermsOfUse() {
@@ -133,12 +153,12 @@ function testTermsOfUse() {
     formData[6].setAttribute("data-error-visible", "false");
     return true;
   }
-  formData[6].setAttribute("data-error-visible", "true")
- return false;
+  formData[6].setAttribute("data-error-visible", "true");
+  return false;
 }
 
 function verifyInputs(e) {
-  e.preventDefault(); 
+  e.preventDefault();
   testFirstName();
   testLastName();
   testEmail();
@@ -146,4 +166,31 @@ function verifyInputs(e) {
   testQuantity();
   testLocation();
   testTermsOfUse();
+
+  // confirmation message
+
+  if (
+    testFirstName() &&
+    testLastName() &&
+    testEmail() &&
+    testBirthdate() &&
+    testQuantity() &&
+    testLocation() &&
+    testTermsOfUse()
+  ) {
+    const modalBody = document.querySelector(".modal-body");
+    modalBody.innerHTML = `
+                          <p style="text-align: center; margin-bottom: 100px; margin-top:100px">
+                            Merci pour <br/> votre inscription
+                          </p>
+                          <button class="modal-btn" id="closeConfirmationModal">
+                          Fermer
+                          </button>`;
+  }
+
+  const closeConfirmationModal = document.getElementById(
+    "closeConfirmationModal"
+  );
+
+  closeConfirmationModal.addEventListener("click", closeModal);
 }
