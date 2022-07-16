@@ -22,7 +22,7 @@ formData[1].setAttribute(
 formData[2].setAttribute("data-error", "Saisissez une adresse e-mail valide.");
 formData[3].setAttribute(
   "data-error",
-  "Vous devez renseigner une date de naissance."
+  "Saisissez une date de naissance non postérieure à aujourd'hui."
 );
 formData[4].setAttribute(
   "data-error",
@@ -108,7 +108,9 @@ function testEmail() {
 }
 
 function testBirthdate() {
-  if (birthdateInput.value) {
+  const birthDate = new Date(birthdateInput.value)
+
+  if (birthdateInput.value && birthDate < Date.now()) {
     formData[3].setAttribute("data-error-visible", "false");
     return true;
   }
